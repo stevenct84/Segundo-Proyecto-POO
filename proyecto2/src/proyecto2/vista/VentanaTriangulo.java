@@ -27,33 +27,6 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
     
     public VentanaTriangulo () {
         initComponents();
-        
-        /*int numero=Integer.parseInt((String)jBoxCantidad.getSelectedItem());
-        TrianguloPascal triangulo=new TrianguloPascal(10);
-        System.out.println(triangulo.getFilas());
-        
-        
-        GridBagConstraints gbc = new GridBagConstraints();
-        //int grid[][]={{1},{1,2,1},{1,2,2,1}};
-            for (int i = 0; i < triangulo.getFilas().size(); i++) {
-                pane = new JPanel();
-                for (int j = 0; j < triangulo.getFilas().get(i).size(); j++) {
-                    JButton boton=new JButton(String.valueOf(triangulo.getFilas().get(i).get(j).getNumero()));
-                    String color=triangulo.getFilas().get(i).get(j).getColor();
-                    if (color==null){
-                        boton.setBackground(Color.WHITE);
-                    }else{
-                        boton.setBackground(Color.getColor(color));
-                    };
-                    boton.setFont(new Font("Dialog", Font.PLAIN, 12));
-                    pane.add(boton);
-                }
-                gbc.gridx=1;
-                gbc.gridy=i;
-                jPanelPascal.add(pane, gbc);          
-            }
-            jPanelPascal.validate();
-            //pane.setOpaque(false);*/
  
     }
 
@@ -157,7 +130,6 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
         jPanelPascal.removeAll();//limbiar el panel para cargar los nuevos datos.
         int numero = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
         TrianguloPascal triangulo = new TrianguloPascal(numero);
-        elControl.crearTriangulo(numero);
         //System.out.println(elControl.crearTriangulo(numero).getFilas());
 
         GridBagConstraints gbc = new GridBagConstraints();

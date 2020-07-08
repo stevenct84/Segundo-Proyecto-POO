@@ -129,12 +129,13 @@
     <Component class="javax.swing.JComboBox" name="jBoxActividad">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="Pares e impares"/>
-            <StringItem index="1" value="Diagonales"/>
-            <StringItem index="2" value="Sumas horizontales"/>
-            <StringItem index="3" value="Simetr&#xed;a"/>
-            <StringItem index="4" value="Sucesi&#xf3;n de Fibonacci"/>
+          <StringArray count="6">
+            <StringItem index="0" value="########"/>
+            <StringItem index="1" value="Pares e impares"/>
+            <StringItem index="2" value="Diagonales"/>
+            <StringItem index="3" value="Sumas horizontales"/>
+            <StringItem index="4" value="Simetr&#xed;a"/>
+            <StringItem index="5" value="Sucesi&#xf3;n de Fibonacci"/>
           </StringArray>
         </Property>
       </Properties>

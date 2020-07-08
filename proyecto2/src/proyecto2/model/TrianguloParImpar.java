@@ -16,13 +16,16 @@ public class TrianguloParImpar extends TrianguloPascal {
     public TrianguloParImpar(int tamanio) {
         super(tamanio);
     }
-}
+
     
-    /*public void colorearCeldas(){
-        for(int i=0; i<TrianguloParImpar(int tamanio).getFilas().size(); i++)
-            for(int j=0; j){
-                if (TrianguloParImpar(int tamanio).getFilas().get()%2 == 0) ? celda.setColor("#ffffff"): celda.setColor("#000000")
-                
+    public void colorearCeldas(){
+        for(int i=0; i<filas.size(); i++){
+            for(int j=0;j<filas.get(i).size(); j++){
+                if(filas.get(i).get(j).getNumero()%2==0){
+                    filas.get(i).get(j).setColor("#0000FF");
+                }else{
+                    filas.get(i).get(j).setColor("#EF1020");
+                }
             }
         }
         

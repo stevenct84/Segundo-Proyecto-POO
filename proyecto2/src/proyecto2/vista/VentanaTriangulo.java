@@ -95,7 +95,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
 
         jLabel2.setText("Accion a realizar:");
 
-        jBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pares e impares", "Diagonales", "Sumas horizontales", "Simetría", "Sucesión de Fibonacci" }));
+        jBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "########", "Pares e impares", "Diagonales", "Sumas horizontales", "Simetría", "Sucesión de Fibonacci" }));
         jBoxActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBoxActividadActionPerformed(evt);
@@ -157,7 +157,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
         jPanelPascal.removeAll();//limbiar el panel para cargar los nuevos datos.
         int numero = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
         TrianguloPascal triangulo = new TrianguloPascal(numero);
-        //elControl.crearTriangulo(numero);
+        elControl.crearTriangulo(numero);
         //System.out.println(elControl.crearTriangulo(numero).getFilas());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -167,7 +167,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
                 JButton boton = new JButton(String.valueOf(triangulo.getFilas().get(i).get(j).getNumero()));
                 String color = triangulo.getFilas().get(i).get(j).getColor();
                 if (color == null) {
-                    boton.setBackground(Color.WHITE);
+                    boton.setBackground(Color.white);
                 } else {
                     boton.setBackground(Color.getColor(color));
                 };
@@ -195,16 +195,37 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
     }//GEN-LAST:event_JButtonObtenerInfoActionPerformed
 
     private void jBoxActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBoxActividadActionPerformed
-        String eleccion=(String) jBoxCantidad.getSelectedItem();
-        switch(eleccion){
-            case "Par e impares":
+        jPanelPascal.removeAll();
+        String eleccion = (String) jBoxActividad.getSelectedItem();
+        switch (eleccion) {
+            case "Pares e impares":
                 int numero = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
                 TrianguloParImpar trianguloParImpar = new TrianguloParImpar(numero);
+                GridBagConstraints gbc = new GridBagConstraints();
+                for (int i = 0; i < trianguloParImpar.getFilas().size(); i++) {
+                    pane = new JPanel();
+                    for (int j = 0; j < trianguloParImpar.getFilas().get(i).size(); j++) {
+                        JButton boton = new JButton(String.valueOf(trianguloParImpar.getFilas().get(i).get(j).getNumero()));
+                        trianguloParImpar.colorearCeldas();
+                        String color = trianguloParImpar.getFilas().get(i).get(j).getColor();
+                        if (color == null) {
+                            boton.setBackground(Color.WHITE);
+                        } else {
+                            boton.setBackground(Color.decode(color));
+                        };
+                        boton.setFont(new Font("Dialog", Font.PLAIN, 12));
+                        pane.add(boton);
+                    }
+                    gbc.gridx = 1;
+                    gbc.gridy = i;
+                    jPanelPascal.add(pane, gbc);
+                }
                 
-                
-        }
-    }//GEN-LAST:event_jBoxActividadActionPerformed
+                jPanelPascal.validate();
+                jPanelPascal.repaint();//volver a rellenar por si hay cambios
 
+    }//GEN-LAST:event_jBoxActividadActionPerformed
+}
     /**
      * @param args the command line arguments
      */

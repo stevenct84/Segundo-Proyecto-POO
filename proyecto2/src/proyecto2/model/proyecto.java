@@ -12,9 +12,9 @@ public class proyecto {
     public static void main(String[] args) {
         TrianguloParImpar triangulo=new TrianguloParImpar(5);
 
-        System.out.println(((TrianguloPascal)triangulo).getFilas());  
+ 
         (triangulo).colorearCeldas();
-        System.out.println(((TrianguloPascal)triangulo).getFilas());
+
         
     }
 }

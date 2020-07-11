@@ -11,10 +11,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import proyecto2.controlador.Controlador;
+import proyecto2.model.TrianguloDiagonal;
+import proyecto2.model.TrianguloFibonacci;
 import proyecto2.model.TrianguloParImpar;
 import proyecto2.model.TrianguloPascal;
+
 
 
 /**
@@ -192,10 +196,67 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
                     gbc.gridy = i;
                     jPanelPascal.add(pane, gbc);
                 }
+
                 
+                
+                case "Diagonales":
+                int numeroDiagonal = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
+                TrianguloDiagonal trianguloDiagonal = new TrianguloDiagonal(numeroDiagonal);
+                GridBagConstraints gbcDiagonal = new GridBagConstraints();
+                for (int i = 0; i < trianguloDiagonal.getFilas().size(); i++) {
+                    pane = new JPanel();
+                    for (int j = 0; j < trianguloDiagonal.getFilas().get(i).size(); j++) {
+                        JButton boton = new JButton(String.valueOf(trianguloDiagonal.getFilas().get(i).get(j).getNumero()));
+                        trianguloDiagonal.colorearCeldas();
+                        String color = trianguloDiagonal.getFilas().get(i).get(j).getColor();
+                        if (color == null) {
+                            boton.setBackground(Color.WHITE);
+                        } else {
+                            boton.setBackground(Color.decode(color));
+                        };
+                        boton.setFont(new Font("Dialog", Font.PLAIN, 12));
+                        pane.add(boton);
+                    }
+                    gbcDiagonal.gridx = 1;
+                    gbcDiagonal.gridy = i;
+                    jPanelPascal.add(pane, gbcDiagonal);
+                }
+                
+                case "Sucesión de Fibonacci":
+                int numeroFibonacci = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
+                TrianguloFibonacci trianguloFibonacci = new TrianguloFibonacci(numeroFibonacci);
+                GridBagConstraints gbcFibonacci = new GridBagConstraints();
+                for (int i = 0; i < trianguloFibonacci.getFilas().size(); i++) {
+                    pane = new JPanel();
+                    for (int j = 0; j < trianguloFibonacci.getFilas().get(i).size(); j++) {
+                        JButton boton = new JButton(String.valueOf(trianguloFibonacci.getFilas().get(i).get(j).getNumero()));
+                        trianguloFibonacci.colorearCeldas();
+                        String color = trianguloFibonacci.getFilas().get(i).get(j).getColor();
+                        if (color == null) {
+                            boton.setBackground(Color.WHITE);
+                        } else {
+                            boton.setBackground(Color.decode(color));
+                        };
+                        boton.setFont(new Font("Dialog", Font.PLAIN, 12));
+                        pane.add(boton);
+                    }
+                    gbcFibonacci.gridx = 1;
+                    gbcFibonacci.gridy = i;
+                    jPanelPascal.add(pane, gbcFibonacci);
+                }
+                
+                
+                
+                
+
                 jPanelPascal.validate();
                 jPanelPascal.repaint();//volver a rellenar por si hay cambios
 
+                
+                
+                
+                
+                
     }//GEN-LAST:event_jBoxActividadActionPerformed
 }
     /**

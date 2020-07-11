@@ -27,6 +27,7 @@ public class TrianguloParImpar extends TrianguloPascal {
                     filas.get(i).get(j).setColor("#EF1020");
                 }
             }
+
         }
         
     }

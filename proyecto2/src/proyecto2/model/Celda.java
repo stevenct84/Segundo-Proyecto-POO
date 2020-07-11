@@ -1,4 +1,4 @@
-package proyecto2.model;
+    package proyecto2.model;
 
 /**
  *
@@ -9,12 +9,16 @@ public class Celda {
     private int diagonal; 
     private String color;
 
+
     public Celda() {
     }
 
     public String getColor() {
         return color;
     }
+
+
+
 
     public void setColor(String color) {
         this.color = color;
@@ -51,8 +55,10 @@ public class Celda {
 
     @Override
     public String toString() {
-        return "Celda{" + "numero=" + numero + ", diagonal=" + diagonal + ", color=" + color + '}';
+        return "Celda{" + "numero=" + numero + ", diagonal=" + diagonal  + '}';
     }
+
+  
 
     
 }

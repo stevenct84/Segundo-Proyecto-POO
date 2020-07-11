@@ -29,8 +29,12 @@ public class TrianguloPascal{
                 celda.setNumero(number);
                 number = number * (i - j) / (j + 1);
                 celdas.add(celda);
+                celda.setDiagonal(j);
                 } 
+            
             filas.add(celdas);
+
+            
         }
         
     }

@@ -21,24 +21,27 @@ import proyecto2.model.TrianguloPascal;
 public class GaltonDiseno extends Canvas{
     int x, y;
     Controlador elControl= new Controlador();
+    int filas=0;
+    Graphics g;
+    
     
     /**
      * Diseño de la ventana
      */
-    public GaltonDiseno() {
+    public GaltonDiseno(int numero) {
         this.setBackground(Color.black);
+        this.filas=numero;
     }
 
     /**
      * Función que se encarga de colocar los dibujos según el triángulo solicitado
      * @param g 
      */
+    @Override
     public void paint(Graphics g){
         g.setColor(Color.red);
-        TrianguloPascal triangulo=elControl.crearTriangulo(10);
-        int cantidad=triangulo.getFilas().size();
         int x=490,y=50;
-        
+        TrianguloPascal triangulo=elControl.crearTriangulo(filas);
         int iterador=0;
         for(int i=0; i<triangulo.getFilas().size();i++){
             int acumuladox=0;

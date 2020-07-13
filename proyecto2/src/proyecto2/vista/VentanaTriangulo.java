@@ -12,7 +12,10 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import proyecto2.controlador.Controlador;
 import proyecto2.model.Celda;
 import proyecto2.model.TrianguloDiagonal;
@@ -36,6 +39,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
         initComponents();
         this.setLocationRelativeTo(null);
         elControl=new Controlador() ;
+        
         
     }
 
@@ -168,14 +172,39 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
 
     private void JButtonObtenerInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonObtenerInfoActionPerformed
         JFrame VentanaInformacion = new JFrame("Información");
-        VentanaInformacion.pack();
         VentanaInformacion.setResizable(false);
         VentanaInformacion.setVisible(true);
-        VentanaInformacion.setLayout(null);
-        VentanaInformacion.setSize(400, 500);
+        VentanaInformacion.setSize(400, 200);
         VentanaInformacion.setLocationRelativeTo(null);
         VentanaInformacion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);// TODO add your handling code here:
-        VentanaInformacion.getContentPane().setBackground(Color.white);
+        //JLabel informacion=new JLabel();
+        String eleccion = (String) jBoxActividad.getSelectedItem();
+        JTextPane informacion = new JTextPane();
+        informacion.setEditable(false);
+        informacion.setFont(new Font("Dialog", Font.PLAIN, 14));
+        if ("Pares e impares".equals(eleccion))
+            informacion.setText(" Las casillas de los números pares son coloreadas\n "
+                            + "de Rojo, los impares de color Cyan\n"
+                    + "Se obtienes un patrón igual al del Triángulo de Sierpinski");
+        if ("Sumas horizontales".equals(eleccion))
+            informacion.setText("Las sumas de las filas se realizan, colocando las\n"
+                            + "casillas de diferentes colores para diferenciar en la\n"
+                            + "inferior de la pantalla una lista con los colores de\n"
+                            + "cada fila y sus respectivos resultados");
+        if ("Diagonales".equals(eleccion))
+            informacion.setText("Se colorean las diagonales de distintos colores.\n"
+                    + "Las diagonales del triángulo nos muestran propiedades de los números. \n"
+                    + "Algunas de ellas son:"
+                    + " Los números naturales, comienzan en 1 y siguen consecutivamente.\n"
+                    + "En la tercera se presentan los números triangulares");
+        if ("Simetría".equals(eleccion))
+            informacion.setText("El triángulo es simétrico, esto quiere decir que se ve\n"
+                    + "igual desde la derecha(rojo) que desde la izquierda(azul)\n"
+                    + "si es una fila impar su centro es de color purpura");
+        if("Sucesión de Fibonacci".equals(eleccion))
+            informacion.setText("Empezando por la primer fila se señala la sucesión Fibonacci, en cada fila se observa con diferentes colores su continuidad, ");
+        
+        VentanaInformacion.add(informacion);
     }//GEN-LAST:event_JButtonObtenerInfoActionPerformed
 
     private void jBoxActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBoxActividadActionPerformed
@@ -186,7 +215,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
         String eleccion = (String) jBoxActividad.getSelectedItem();
         int numero = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
         GridBagConstraints gbc = new GridBagConstraints();
-        if (eleccion=="Pares e impares"){
+        if ("Pares e impares".equals(eleccion)){
                TrianguloPascal trianguloParImpar = elControl.crearTrianguloParImpar(numero);
                 
                 for (int i = 0; i < trianguloParImpar.getFilas().size(); i++) {
@@ -199,7 +228,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
                             boton.setBackground(Color.WHITE);
                         } else {
                             boton.setBackground(Color.decode(color));
-                        };
+                        }
                         boton.setFont(new Font("Dialog", Font.PLAIN, 12));
                         pane.add(boton);
                     }
@@ -210,10 +239,10 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
                 jPanelPascal.validate();
                 jPanelPascal.repaint();//volver a rellenar por si hay cambios
         }        
-        if (eleccion == "Sumas horizontales") {
+        if ("Sumas horizontales".equals(eleccion)) {
             TrianguloSumasHorizontales trianguloSumasHorizontales = elControl.crearTrianguloSumasHorizontales(numero);
             trianguloSumasHorizontales.colorearCeldas();//colorear las celdas
-            ArrayList<String> guardaColores = new ArrayList<String>();
+            ArrayList<String> guardaColores = new ArrayList<>();
             for (int i = 0; i < trianguloSumasHorizontales.getFilas().size(); i++) {
                 pane = new JPanel();
                 for (int j = 0; j < trianguloSumasHorizontales.getFilas().get(i).size(); j++) {
@@ -223,7 +252,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
                         boton.setBackground(Color.WHITE);
                     } else {
                         boton.setBackground(Color.decode(color));
-                    };
+                    }
                     boton.setFont(new Font("Dialog", Font.PLAIN, 12));
                     pane.add(boton);
                     if (guardaColores.isEmpty() || j == 0) {
@@ -247,12 +276,14 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
                     }
                 }
             }
+            jPanelSumas.validate();
+            jPanelSumas.repaint();
             jPanelPascal.validate();
             jPanelPascal.repaint();//volver a rellenar por si hay cambio
         
         }
         
-        if (eleccion == "Diagonales") {
+        if ("Diagonales".equals(eleccion)) {
             TrianguloDiagonal trianguloDiagonal = new TrianguloDiagonal(numero);
             for (int i = 0; i < trianguloDiagonal.getFilas().size(); i++) {
                 pane = new JPanel();
@@ -264,7 +295,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
                         boton.setBackground(Color.WHITE);
                     } else {
                         boton.setBackground(Color.decode(color));
-                    };
+                    }
                     boton.setFont(new Font("Dialog", Font.PLAIN, 12));
                     pane.add(boton);
                 }
@@ -276,7 +307,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
             jPanelPascal.repaint();
         } 
         
-        if(eleccion=="Sucesión de Fibonacci"){
+        if("Sucesión de Fibonacci".equals(eleccion)){
             TrianguloFibonacci trianguloFibonacci = elControl.crearTrianguloFibonacci(numero);
             for (int i = 0; i < trianguloFibonacci.getFilas().size(); i++) {
                 pane = new JPanel();
@@ -288,7 +319,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
                         boton.setBackground(Color.WHITE);
                     } else {
                         boton.setBackground(Color.decode(color));
-                    };
+                    }
                     boton.setFont(new Font("Dialog", Font.PLAIN, 12));
                     pane.add(boton);
                 }
@@ -300,29 +331,29 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
             jPanelPascal.repaint();
         }
         
-        if (eleccion == "Simetría") {
+        if("Simetría".equals(eleccion)){
             TrianguloSimetria simetria = new TrianguloSimetria(numero);
-            for (int i = 0; i < simetria.getFilas().size(); i++) {
-                pane = new JPanel();
-                for (int j = 0; j < simetria.getFilas().get(i).size(); j++) {
-                    JButton boton = new JButton(String.valueOf(simetria.getFilas().get(i).get(j).getNumero()));
-                    simetria.colorearSimetria();
-                    String color = simetria.getFilas().get(i).get(j).getColor();
-                    if (color == null) {
-                        boton.setBackground(Color.WHITE);
-                    } else {
-                        boton.setBackground(Color.decode(color));
-                    };
-                    boton.setFont(new Font("Dialog", Font.PLAIN, 12));
-                    pane.add(boton);
+                for (int i = 0; i < simetria.getFilas().size(); i++) {
+                    pane = new JPanel();
+                    for (int j = 0; j < simetria.getFilas().get(i).size(); j++) {
+                        JButton boton = new JButton(String.valueOf(simetria.getFilas().get(i).get(j).getNumero()));
+                        simetria.colorearSimetria();
+                        String color = simetria.getFilas().get(i).get(j).getColor();
+                        if (color == null) {
+                            boton.setBackground(Color.WHITE);
+                        } else {
+                            boton.setBackground(Color.decode(color));
+                        };
+                        boton.setFont(new Font("Dialog", Font.PLAIN, 12));
+                        pane.add(boton);
+                    }
+                    gbc.gridx = 1;
+                    gbc.gridy = i;
+                    jPanelPascal.add(pane, gbc);
                 }
-                gbc.gridx = 1;
-                gbc.gridy = i;
-                jPanelPascal.add(pane, gbc);
-            }
-
-            jPanelPascal.validate();
-            jPanelPascal.repaint();//volver a rellenar por si hay cambios
+                
+                jPanelPascal.validate();
+                jPanelPascal.repaint();//volver a rellenar por si hay cambios
             
         }
     }//GEN-LAST:event_jBoxActividadActionPerformed
@@ -361,7 +392,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
                     boton.setBackground(Color.white);
                 } else {
                     boton.setBackground(Color.getColor(color));
-                };
+                }
                 boton.setFont(new Font("Dialog", Font.PLAIN, 12));
                 pane.add(boton);
             }

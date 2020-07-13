@@ -28,21 +28,16 @@ public class TrianguloPascal{
                 Celda celda=new Celda();
                 celda.setNumero(number);
                 number = number * (i - j) / (j + 1);
+                celda.setDiagonal(j);
                 celdas.add(celda);
                 } 
             filas.add(celdas);
         }
         
     }
-    
-    
-    
+
     public void colorearCeldas(){
         
     }
-    
-    
-    
-    
-    
+
 }

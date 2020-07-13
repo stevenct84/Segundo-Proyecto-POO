@@ -9,12 +9,19 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import proyecto2.controlador.Controlador;
-import proyecto2.model.TrianguloParImpar;
+import proyecto2.model.Celda;
+import proyecto2.model.TrianguloDiagonal;
+import proyecto2.model.TrianguloFibonacci;
+import proyecto2.model.TrianguloSumasHorizontales;
 import proyecto2.model.TrianguloPascal;
+import proyecto2.model.TrianguloParImpar;
+import proyecto2.model.TrianguloSimetria;
+
 
 
 /**
@@ -23,11 +30,13 @@ import proyecto2.model.TrianguloPascal;
  */
 public class VentanaTriangulo extends javax.swing.JFrame  {
     JPanel pane;
-    private Controlador elControl ;
+    private Controlador elControl;
     
     public VentanaTriangulo () {
         initComponents();
- 
+        this.setLocationRelativeTo(null);
+        elControl=new Controlador() ;
+        
     }
 
     /**
@@ -46,14 +55,16 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
         jLabel2 = new javax.swing.JLabel();
         jBoxActividad = new javax.swing.JComboBox<>();
         JButtonObtenerInfo = new javax.swing.JButton();
+        jPanelSumas = new javax.swing.JPanel();
+        jButtonResetear = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("VentanaTriangulo");
         setBackground(new java.awt.Color(102, 102, 102));
 
-        jBoxCantidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", " " }));
+        jBoxCantidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
         jBoxCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBoxCantidadActionPerformed(evt);
@@ -68,7 +79,7 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
 
         jLabel2.setText("Accion a realizar:");
 
-        jBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "########", "Pares e impares", "Diagonales", "Sumas horizontales", "Simetría", "Sucesión de Fibonacci" }));
+        jBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pares e impares", "Diagonales", "Sumas horizontales", "Simetría", "Sucesión de Fibonacci" }));
         jBoxActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBoxActividadActionPerformed(evt);
@@ -82,45 +93,64 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
             }
         });
 
+        jPanelSumas.setLayout(new java.awt.GridBagLayout());
+
+        jButtonResetear.setText("Resetear");
+        jButtonResetear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResetearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel1)
-                .addGap(4, 4, 4)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelPascal, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBoxCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
+                        .addGap(56, 56, 56)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBoxActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(JButtonObtenerInfo)
-                        .addGap(19, 19, 19))))
+                        .addGap(19, 19, 19))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jPanelPascal, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jPanelSumas, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonResetear)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jBoxActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JButtonObtenerInfo)
+                    .addComponent(jLabel1)
+                    .addComponent(jBoxCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addComponent(jPanelPascal, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel1))
+                        .addComponent(jPanelSumas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(16, 16, 16))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBoxCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jBoxActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JButtonObtenerInfo))))
-                .addGap(18, 18, 18)
-                .addComponent(jPanelPascal, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                        .addComponent(jButtonResetear)
+                        .addContainerGap(20, Short.MAX_VALUE))))
         );
 
         pack();
@@ -128,10 +158,199 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
 
     private void jBoxCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBoxCantidadActionPerformed
         jPanelPascal.removeAll();//limbiar el panel para cargar los nuevos datos.
+        jPanelSumas.removeAll();
+        jPanelSumas.validate();
+        jPanelSumas.repaint();
         int numero = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
-        TrianguloPascal triangulo = new TrianguloPascal(numero);
-        //System.out.println(elControl.crearTriangulo(numero).getFilas());
+        TrianguloPascal triangulo= elControl.crearTriangulo(numero);
+        crear(triangulo);
+    }//GEN-LAST:event_jBoxCantidadActionPerformed
 
+    private void JButtonObtenerInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonObtenerInfoActionPerformed
+        JFrame VentanaInformacion = new JFrame("Información");
+        VentanaInformacion.pack();
+        VentanaInformacion.setResizable(false);
+        VentanaInformacion.setVisible(true);
+        VentanaInformacion.setLayout(null);
+        VentanaInformacion.setSize(400, 500);
+        VentanaInformacion.setLocationRelativeTo(null);
+        VentanaInformacion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);// TODO add your handling code here:
+        VentanaInformacion.getContentPane().setBackground(Color.white);
+    }//GEN-LAST:event_JButtonObtenerInfoActionPerformed
+
+    private void jBoxActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBoxActividadActionPerformed
+        jPanelPascal.removeAll();
+        jPanelSumas.removeAll();
+        jPanelSumas.validate();
+        jPanelSumas.repaint();
+        String eleccion = (String) jBoxActividad.getSelectedItem();
+        int numero = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
+        GridBagConstraints gbc = new GridBagConstraints();
+        if (eleccion=="Pares e impares"){
+               TrianguloPascal trianguloParImpar = elControl.crearTrianguloParImpar(numero);
+                
+                for (int i = 0; i < trianguloParImpar.getFilas().size(); i++) {
+                    pane = new JPanel();
+                    for (int j = 0; j < trianguloParImpar.getFilas().get(i).size(); j++) {
+                        JButton boton = new JButton(String.valueOf(trianguloParImpar.getFilas().get(i).get(j).getNumero()));
+                        trianguloParImpar.colorearCeldas();
+                        String color = trianguloParImpar.getFilas().get(i).get(j).getColor();
+                        if (color == null) {
+                            boton.setBackground(Color.WHITE);
+                        } else {
+                            boton.setBackground(Color.decode(color));
+                        };
+                        boton.setFont(new Font("Dialog", Font.PLAIN, 12));
+                        pane.add(boton);
+                    }
+                    gbc.gridx = 1;
+                    gbc.gridy = i;
+                    jPanelPascal.add(pane, gbc);
+                }
+                jPanelPascal.validate();
+                jPanelPascal.repaint();//volver a rellenar por si hay cambios
+        }        
+        if (eleccion == "Sumas horizontales") {
+            TrianguloSumasHorizontales trianguloSumasHorizontales = elControl.crearTrianguloSumasHorizontales(numero);
+            trianguloSumasHorizontales.colorearCeldas();//colorear las celdas
+            ArrayList<String> guardaColores = new ArrayList<String>();
+            for (int i = 0; i < trianguloSumasHorizontales.getFilas().size(); i++) {
+                pane = new JPanel();
+                for (int j = 0; j < trianguloSumasHorizontales.getFilas().get(i).size(); j++) {
+                    JButton boton = new JButton(String.valueOf(trianguloSumasHorizontales.getFilas().get(i).get(j).getNumero()));
+                    String color = trianguloSumasHorizontales.getFilas().get(i).get(j).getColor();
+                    if (color == null) {
+                        boton.setBackground(Color.WHITE);
+                    } else {
+                        boton.setBackground(Color.decode(color));
+                    };
+                    boton.setFont(new Font("Dialog", Font.PLAIN, 12));
+                    pane.add(boton);
+                    if (guardaColores.isEmpty() || j == 0) {
+                        guardaColores.add(color);
+                    }
+                }
+                gbc.gridx = 1;
+                gbc.gridy = i;
+                jPanelPascal.add(pane, gbc);
+                if (i == numero - 1) {
+                    JPanel panelSumas;
+                    for (int k = 0; k < trianguloSumasHorizontales.getSuma().size(); k++) {
+                        panelSumas = new JPanel();
+                        JButton botonSuma = new JButton(String.valueOf(trianguloSumasHorizontales.getSuma().get(k)));
+                        botonSuma.setBackground(Color.decode(guardaColores.get(k)));
+                        botonSuma.setFont(new Font("Dialog", Font.PLAIN, 12));
+                        panelSumas.add(botonSuma);
+                        gbc.gridx = k;
+                        gbc.gridy = 1;
+                        jPanelSumas.add(panelSumas, gbc);
+                    }
+                }
+            }
+            jPanelPascal.validate();
+            jPanelPascal.repaint();//volver a rellenar por si hay cambio
+        
+        }
+        
+        if (eleccion == "Diagonales") {
+            TrianguloDiagonal trianguloDiagonal = new TrianguloDiagonal(numero);
+            for (int i = 0; i < trianguloDiagonal.getFilas().size(); i++) {
+                pane = new JPanel();
+                for (int j = 0; j < trianguloDiagonal.getFilas().get(i).size(); j++) {
+                    JButton boton = new JButton(String.valueOf(trianguloDiagonal.getFilas().get(i).get(j).getNumero()));
+                    trianguloDiagonal.colorearCeldas();
+                    String color = trianguloDiagonal.getFilas().get(i).get(j).getColor();
+                    if (color == null) {
+                        boton.setBackground(Color.WHITE);
+                    } else {
+                        boton.setBackground(Color.decode(color));
+                    };
+                    boton.setFont(new Font("Dialog", Font.PLAIN, 12));
+                    pane.add(boton);
+                }
+                gbc.gridx = 1;
+                gbc.gridy = i;
+                jPanelPascal.add(pane, gbc);
+            }
+            jPanelPascal.validate();
+            jPanelPascal.repaint();
+        } 
+        
+        if(eleccion=="Sucesión de Fibonacci"){
+            TrianguloFibonacci trianguloFibonacci = elControl.crearTrianguloFibonacci(numero);
+            for (int i = 0; i < trianguloFibonacci.getFilas().size(); i++) {
+                pane = new JPanel();
+                for (int j = 0; j < trianguloFibonacci.getFilas().get(i).size(); j++) {
+                    JButton boton = new JButton(String.valueOf(trianguloFibonacci.getFilas().get(i).get(j).getNumero()));
+                    trianguloFibonacci.colorearCeldas();
+                    String color = trianguloFibonacci.getFilas().get(i).get(j).getColor();
+                    if (color == null) {
+                        boton.setBackground(Color.WHITE);
+                    } else {
+                        boton.setBackground(Color.decode(color));
+                    };
+                    boton.setFont(new Font("Dialog", Font.PLAIN, 12));
+                    pane.add(boton);
+                }
+                gbc.gridx = 1;
+                gbc.gridy = i;
+                jPanelPascal.add(pane, gbc);
+            }
+            jPanelPascal.validate();
+            jPanelPascal.repaint();
+        }
+        
+        if (eleccion == "Simetría") {
+            TrianguloSimetria simetria = new TrianguloSimetria(numero);
+            for (int i = 0; i < simetria.getFilas().size(); i++) {
+                pane = new JPanel();
+                for (int j = 0; j < simetria.getFilas().get(i).size(); j++) {
+                    JButton boton = new JButton(String.valueOf(simetria.getFilas().get(i).get(j).getNumero()));
+                    simetria.colorearSimetria();
+                    String color = simetria.getFilas().get(i).get(j).getColor();
+                    if (color == null) {
+                        boton.setBackground(Color.WHITE);
+                    } else {
+                        boton.setBackground(Color.decode(color));
+                    };
+                    boton.setFont(new Font("Dialog", Font.PLAIN, 12));
+                    pane.add(boton);
+                }
+                gbc.gridx = 1;
+                gbc.gridy = i;
+                jPanelPascal.add(pane, gbc);
+            }
+
+            jPanelPascal.validate();
+            jPanelPascal.repaint();//volver a rellenar por si hay cambios
+            
+        }
+    }//GEN-LAST:event_jBoxActividadActionPerformed
+
+    private void jButtonResetearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetearActionPerformed
+        jPanelPascal.removeAll();//limbiar el panel para cargar los nuevos datos.
+        jPanelSumas.removeAll();
+        jPanelSumas.validate();
+        jPanelSumas.repaint();
+        int numero = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
+        TrianguloPascal triangulo=elControl.crearTriangulo(numero);
+        crear(triangulo);
+    }//GEN-LAST:event_jButtonResetearActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JButtonObtenerInfo;
+    private javax.swing.JComboBox<String> jBoxActividad;
+    private javax.swing.JComboBox<String> jBoxCantidad;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonResetear;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanelPascal;
+    private javax.swing.JPanel jPanelSumas;
+    // End of variables declaration//GEN-END:variables
+
+    public void crear(TrianguloPascal triangulo) {
         GridBagConstraints gbc = new GridBagConstraints();
         for (int i = 0; i < triangulo.getFilas().size(); i++) {
             pane = new JPanel();
@@ -152,90 +371,8 @@ public class VentanaTriangulo extends javax.swing.JFrame  {
         }
         jPanelPascal.validate();
         jPanelPascal.repaint();//volver a rellenar por si hay cambios
-    }//GEN-LAST:event_jBoxCantidadActionPerformed
 
-    private void JButtonObtenerInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonObtenerInfoActionPerformed
-        JFrame VentanaInformacion = new JFrame("Información");
-        VentanaInformacion.pack();
-        VentanaInformacion.setResizable(false);
-        VentanaInformacion.setVisible(true);
-        VentanaInformacion.setLayout(null);
-        VentanaInformacion.setSize(400, 500);
-        VentanaInformacion.setLocationRelativeTo(null);
-        VentanaInformacion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);// TODO add your handling code here:
-        VentanaInformacion.getContentPane().setBackground(Color.white);
-    }//GEN-LAST:event_JButtonObtenerInfoActionPerformed
-
-    private void jBoxActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBoxActividadActionPerformed
-        jPanelPascal.removeAll();
-        String eleccion = (String) jBoxActividad.getSelectedItem();
-        switch (eleccion) {
-            case "Pares e impares":
-                int numero = Integer.parseInt((String) jBoxCantidad.getSelectedItem());
-                TrianguloParImpar trianguloParImpar = new TrianguloParImpar(numero);
-                GridBagConstraints gbc = new GridBagConstraints();
-                for (int i = 0; i < trianguloParImpar.getFilas().size(); i++) {
-                    pane = new JPanel();
-                    for (int j = 0; j < trianguloParImpar.getFilas().get(i).size(); j++) {
-                        JButton boton = new JButton(String.valueOf(trianguloParImpar.getFilas().get(i).get(j).getNumero()));
-                        trianguloParImpar.colorearCeldas();
-                        String color = trianguloParImpar.getFilas().get(i).get(j).getColor();
-                        if (color == null) {
-                            boton.setBackground(Color.WHITE);
-                        } else {
-                            boton.setBackground(Color.decode(color));
-                        };
-                        boton.setFont(new Font("Dialog", Font.PLAIN, 12));
-                        pane.add(boton);
-                    }
-                    gbc.gridx = 1;
-                    gbc.gridy = i;
-                    jPanelPascal.add(pane, gbc);
-                }
-                
-                jPanelPascal.validate();
-                jPanelPascal.repaint();//volver a rellenar por si hay cambios
-
-    }//GEN-LAST:event_jBoxActividadActionPerformed
-}
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaTriangulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaTriangulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaTriangulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaTriangulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaTriangulo().setVisible(true);
-            }
-        });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JButtonObtenerInfo;
-    private javax.swing.JComboBox<String> jBoxActividad;
-    private javax.swing.JComboBox<String> jBoxCantidad;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanelPascal;
-    // End of variables declaration//GEN-END:variables
+
 }

@@ -22,9 +22,9 @@ public class TrianguloParImpar extends TrianguloPascal {
         for(int i=0; i<filas.size(); i++){
             for(int j=0;j<filas.get(i).size(); j++){
                 if(filas.get(i).get(j).getNumero()%2==0){
-                    filas.get(i).get(j).setColor("#0000FF");
+                    filas.get(i).get(j).setColor("#FF0000");
                 }else{
-                    filas.get(i).get(j).setColor("#EF1020");
+                    filas.get(i).get(j).setColor("#008080");
                 }
             }
         }
